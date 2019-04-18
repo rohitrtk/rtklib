@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "RTK_List.h"
 
 int rtklist_init(rtklist** list)
@@ -22,6 +23,7 @@ void rtklist_free(rtklist** list)
     free(*list);
 }
 
+/*
 int rtklist_append(rtklist** list, void* item)
 {
     rtklist* dlist = *list;
@@ -36,11 +38,17 @@ int rtklist_append(rtklist** list, void* item)
         dlist->maxElements = newSize;
     }
 
-    void* itemCopy = item;
-
-    dlist->data[dlist->currentElement] = itemCopy;
-
     dlist->currentElement++;
 
+    return 0;
+}*/
+
+void* rtklist_pop(rtklist** list)
+{
+    return NULL;   
+}
+
+int rtklist_remove(rtklist** list, int index)
+{
     return 0;
 }
