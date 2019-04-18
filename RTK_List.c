@@ -2,37 +2,45 @@
 #include <stdio.h>
 #include "RTK_List.h"
 
-int rtklist_init(rtklist* list)
+int rtklist_init(rtklist** list)
 {
-    list = malloc(sizeof(rtklist));
+    *list = malloc(sizeof(rtklist));
+    NullErrorCheck(*list);
 
-    list->currentElement = 0;
-    list->maxElements = INCREMENT;
+    (*list)->currentElement = 0;
+    (*list)->maxElements = INCREMENT;
 
-    list->data = malloc(sizeof(void*) * list->maxElements);
+    (*list)->data = malloc(sizeof(void*) * (*list)->maxElements);
+    NullErrorCheck((*list)->data);
 
     return 0;
 }
 
-void rtklist_free(rtklist* list)
+void rtklist_free(rtklist** list)
 {
-    printf("In Free\n");
-
+    free((*list)->data);
+    free(*list);
 }
 
-int rtklist_append(rtklist* list, void* item)
+int rtklist_append(rtklist** list, void* item)
 {
-    if(list->currentElement == list->maxElements)
+    rtklist* dlist = *list;
+
+    if(dlist->currentElement == dlist->maxElements)
     {
-        list = realloc(list, sizeof(void*) * (list->maxElements + INCREMENT));
-        if(list == NULL)
-        {
-            return ARRAY_ERROR;
-        }
+        unsigned int newSize = dlist->maxElements + INCREMENT;
+
+        dlist->data = realloc(dlist->data, sizeof(void*) * newSize);   
+        NullErrorCheck(dlist->data);
+
+        dlist->maxElements = newSize;
     }
 
-    list->data[list->currentElement] = item;
-    list->currentElement++;
+    void* itemCopy = item;
+
+    dlist->data[dlist->currentElement] = itemCopy;
+
+    dlist->currentElement++;
 
     return 0;
 }
