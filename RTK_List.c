@@ -19,11 +19,16 @@ int rtklist_init(rtklist** list)
 
 void rtklist_free(rtklist** list)
 {
+    for(int i = 0;i < (*list)->currentElement;i++)
+    {
+        free((*list)->data[i]);
+    }
+
     free((*list)->data);
     free(*list);
 }
 
-/*
+
 int rtklist_append(rtklist** list, void* item)
 {
     rtklist* dlist = *list;
@@ -38,17 +43,51 @@ int rtklist_append(rtklist** list, void* item)
         dlist->maxElements = newSize;
     }
 
+    dlist->data[dlist->currentElement] = malloc(sizeof(*item));
+
+    memcpy(dlist->data[dlist->currentElement], item, sizeof(void*));
+
+    NullErrorCheck(dlist->data[dlist->currentElement]);
+
     dlist->currentElement++;
 
     return 0;
-}*/
+}
 
-void* rtklist_pop(rtklist** list)
+void* rtklist_pop(rtklist** list, void* pop)
 {
-    return NULL;   
+    rtklist* dlist = *list;
+
+    if(dlist->currentElement == 0)
+    {
+        pop = NULL;
+        return pop;
+    }
+
+    int prev = dlist->currentElement--;
+    
+    memcpy(pop, dlist->data[prev], sizeof(void*));
+
+    free(dlist->data[prev]);
+
+    dlist->currentElement--;
+
+    return pop;
 }
 
 int rtklist_remove(rtklist** list, int index)
 {
     return 0;
+}
+
+void* rtklist_get(rtklist** list, int index)
+{
+    rtklist* dlist = *list;
+
+    if(index >= dlist->currentElement)
+    {
+        return NULL;
+    }
+
+    return dlist->data[index];
 }
