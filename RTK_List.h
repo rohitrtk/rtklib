@@ -8,7 +8,7 @@
 
 #define INCREMENT 10
 
-#define NullErrorCheck(x) if(x == NULL) return RTK_ERROR;
+#define NullErrorCheck(value, ret) if(value == NULL) return ret;
 
 /*
 #define rtklist_append(list, item, item_type) {\
@@ -49,9 +49,9 @@ int rtklist_append(rtklist**, void*);
 int rtklist_remove(rtklist**, int);
 
 /* Pop an item from the end of the list */
-void* rtklist_pop(rtklist**, void*);
+void* rtklist_pop(rtklist**, void**);
 
-/* Returns an item in the list at index */
-void* rtklist_get(rtklist**, int);
+/* Returns a pointer to an item in the list at index */
+void** rtklist_get(rtklist**, int);
 
 #endif

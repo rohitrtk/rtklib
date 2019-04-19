@@ -6,13 +6,13 @@
 int rtklist_init(rtklist** list)
 {
     *list = malloc(sizeof(rtklist));
-    NullErrorCheck(*list);
+    NullErrorCheck(*list, RTK_ERROR);
 
     (*list)->currentElement = 0;
     (*list)->maxElements = INCREMENT;
 
     (*list)->data = malloc(sizeof(void*) * (*list)->maxElements);
-    NullErrorCheck((*list)->data);
+    NullErrorCheck((*list)->data, RTK_ERROR);
 
     return 0;
 }
@@ -38,7 +38,7 @@ int rtklist_append(rtklist** list, void* item)
         unsigned int newSize = dlist->maxElements + INCREMENT;
 
         dlist->data = realloc(dlist->data, sizeof(void*) * newSize);   
-        NullErrorCheck(dlist->data);
+        NullErrorCheck(dlist->data, RTK_ERROR);
 
         dlist->maxElements = newSize;
     }
@@ -47,40 +47,34 @@ int rtklist_append(rtklist** list, void* item)
 
     memcpy(dlist->data[dlist->currentElement], item, sizeof(void*));
 
-    NullErrorCheck(dlist->data[dlist->currentElement]);
+    NullErrorCheck(dlist->data[dlist->currentElement], RTK_ERROR);
 
     dlist->currentElement++;
 
     return 0;
 }
 
-void* rtklist_pop(rtklist** list, void* pop)
+void* rtklist_pop(rtklist** list, void** pop)
 {
-    rtklist* dlist = *list;
-
-    if(dlist->currentElement == 0)
-    {
-        pop = NULL;
-        return pop;
-    }
-
-    int prev = dlist->currentElement--;
-    
-    memcpy(pop, dlist->data[prev], sizeof(void*));
-
-    free(dlist->data[prev]);
-
-    dlist->currentElement--;
-
-    return pop;
+    return NULL;
 }
 
 int rtklist_remove(rtklist** list, int index)
 {
+    rtklist* dlist = *list;
+
+    if(index >= dlist->currentElement)
+    {
+        return RTK_ERROR;
+    }
+
+    memmove(dlist->data + index, dlist->data + index + 1, sizeof(void*) * 
+        (dlist->maxElements - index));
+
     return 0;
 }
 
-void* rtklist_get(rtklist** list, int index)
+void** rtklist_get(rtklist** list, int index)
 {
     rtklist* dlist = *list;
 
@@ -89,5 +83,5 @@ void* rtklist_get(rtklist** list, int index)
         return NULL;
     }
 
-    return dlist->data[index];
+    return &(dlist->data[index]);
 }
