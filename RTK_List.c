@@ -3,85 +3,101 @@
 #include <string.h>
 #include "RTK_List.h"
 
-int rtklist_init(rtklist** list)
+rtklist* rtklist_init()
 {
-    *list = malloc(sizeof(rtklist));
-    NullErrorCheck(*list, RTK_ERROR);
+    rtklist* list = malloc(sizeof(rtklist));
 
-    (*list)->currentElement = 0;
-    (*list)->maxElements = INCREMENT;
+    NullErrorCheck(list, NULL);
 
-    (*list)->data = malloc(sizeof(void*) * (*list)->maxElements);
-    NullErrorCheck((*list)->data, RTK_ERROR);
+    list->currentElement = 0;
+    list->maxElements = INCREMENT;
 
-    return 0;
-}
+    list->data = malloc(sizeof(void*) * list->maxElements);
 
-void rtklist_free(rtklist** list)
-{
-    for(int i = 0;i < (*list)->currentElement;i++)
+    if(list->data == NULL)
     {
-        free((*list)->data[i]);
+        free(list);
+        return NULL;
     }
 
-    free((*list)->data);
-    free(*list);
+    return list;
 }
 
-
-int rtklist_append(rtklist** list, void* item)
+void rtklist_free(rtklist* list)
 {
-    rtklist* dlist = *list;
+    NullErrorCheck(list,);
 
-    if(dlist->currentElement == dlist->maxElements)
+    for(int i = 0;i < list->currentElement;i++)
     {
-        unsigned int newSize = dlist->maxElements + INCREMENT;
+        free(list->data[i]);
+    }
+    
+    free(list->data);
+    free(list);
+}
 
-        dlist->data = realloc(dlist->data, sizeof(void*) * newSize);   
-        NullErrorCheck(dlist->data, RTK_ERROR);
+int rtklist_append(rtklist* list, void* item)
+{
+    if(list->currentElement == list->maxElements)
+    {
+        unsigned int newSize = list->maxElements + INCREMENT;
 
-        dlist->maxElements = newSize;
+        list->data = realloc(list->data, sizeof(void*) * newSize);   
+        NullErrorCheck(list->data, RTK_ERROR);
+
+        list->maxElements = newSize;
     }
 
-    dlist->data[dlist->currentElement] = malloc(sizeof(*item));
+    list->data[list->currentElement] = malloc(sizeof(*item));
 
-    memcpy(dlist->data[dlist->currentElement], item, sizeof(void*));
+    memcpy(list->data[list->currentElement], item, sizeof(void*));
 
-    NullErrorCheck(dlist->data[dlist->currentElement], RTK_ERROR);
+    NullErrorCheck(list->data[list->currentElement], RTK_ERROR);
 
-    dlist->currentElement++;
+    list->currentElement++;
 
-    return 0;
+    return list->currentElement - 1;
 }
 
-void* rtklist_pop(rtklist** list, void** pop)
+/* TODO */
+int rtklist_pop(rtklist* list, void** pop)
 {
-    return NULL;
+    int index = list->currentElement - 1;
+
+    memcpy(*pop, list->data[index], sizeof(void*));
+
+    return rtklist_remove(list, index);
 }
 
-int rtklist_remove(rtklist** list, int index)
+/* TODO: Fix memory leak */
+int rtklist_remove(rtklist* list, int index)
 {
-    rtklist* dlist = *list;
-
-    if(index >= dlist->currentElement)
+    if(index >= list->currentElement)
     {
         return RTK_ERROR;
     }
 
-    memmove(dlist->data + index, dlist->data + index + 1, sizeof(void*) * 
-        (dlist->maxElements - index));
+    memmove(list->data + index, list->data + index + 1, sizeof(void*) * 
+        (list->maxElements - index));
+
+    list->currentElement--;
 
     return 0;
 }
 
-void** rtklist_get(rtklist** list, int index)
+void* rtklist_get(rtklist* list, int index)
 {
-    rtklist* dlist = *list;
-
-    if(index >= dlist->currentElement)
+    if(list == NULL || index >= list->currentElement)
     {
         return NULL;
     }
 
-    return &(dlist->data[index]);
+    return list->data[index];
+}
+
+
+int _rtklist_find(rtklist* list, void* item)
+{
+
+    return 1;
 }
