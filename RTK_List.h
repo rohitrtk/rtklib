@@ -15,6 +15,8 @@ struct RTK_List
     void** data;
     unsigned int currentElement;
     unsigned int maxElements;
+
+    int (*rtklist_find)(struct RTK_List*, void*);
 };
 typedef struct RTK_List rtklist;
 
@@ -48,12 +50,17 @@ int rtklist_remove(rtklist*, int);
  */
 void* rtklist_get(rtklist*, int);
 
-/* Finds item in list. Returns 0 if item is in the
- * list, returns 1 if item wasn't found and returns
- * -1 if there was an error.
+/* Returns the size of the array or -1 if the list 
+ * is NULL.
  */
-int _rtklist_find(rtklist*, void*);
+int rtklist_size(rtklist*);
 
-#define rtklist_find(list, item, item_type) _rtklist_find(list, (item_type*)item)
+/* Returns -1. The user is supposed to define their own
+ * find function since the types in the list aren't known.
+ */
+static inline int _rtklist_find_not_implemented() 
+{
+    return -1;
+}
 
 #endif

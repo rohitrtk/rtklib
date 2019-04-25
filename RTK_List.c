@@ -20,6 +20,11 @@ rtklist* rtklist_init()
         return NULL;
     }
 
+    if(list->rtklist_find == NULL)
+    {
+        list->rtklist_find = &_rtklist_find_not_implemented;
+    }
+
     return list;
 }
 
@@ -77,9 +82,9 @@ int rtklist_remove(rtklist* list, int index)
         return RTK_ERROR;
     }
 
-    memmove(list->data + index, list->data + index + 1, sizeof(void*) * 
-        (list->maxElements - index));
-
+    memmove(list->data[index], list->data[index + 1], sizeof(void*) *
+        (list->currentElement - 1 - index));
+    
     list->currentElement--;
 
     return 0;
@@ -95,9 +100,16 @@ void* rtklist_get(rtklist* list, int index)
     return list->data[index];
 }
 
-
-int _rtklist_find(rtklist* list, void* item)
+int rtklist_size(rtklist* list)
 {
+    NullErrorCheck(list, RTK_ERROR);
 
-    return 1;
+    int size = 0;
+
+    while(list->data[size] != NULL)
+    {
+        size++;
+    }
+
+    return size;
 }
