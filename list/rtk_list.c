@@ -6,24 +6,29 @@
 
 int rtklist_increment = 10;
 
-struct rtklist* rtkMallocList()
+rtklist* rtkMallocList()
 {
-    struct rtklist* list = malloc(sizeof(struct rtklist));
-    list->currMul = 1;
-    list->currSize = 0;
+    rtklist* list   = malloc(sizeof(rtklist));
+    list->currMul   = 1;
+    list->currSize  = 0;
     
-    list->data = malloc(sizeof(int) * list->currMul * rtklist_increment);
+    list->data      = malloc(sizeof(int) * list->currMul * rtklist_increment);
 
+    list->append    = _rtkListAppend;
+    list->get       = _rtkListGetCurrentSize;
+    list->pop       = _rtkListPop;
+    list->size      = _rtkListGetCurrentSize;
+    
     return list;
 }
 
-void rtkFreeList(struct rtklist* list)
+void rtkFreeList(rtklist* list)
 {
     free(list->data);
     free(list);
 }
 
-void rtkListAppend(struct rtklist* list, int data)
+void _rtkListAppend(rtklist* list, int data)
 {
     if(list->currSize == list->currMul * rtklist_increment)
     {
@@ -38,7 +43,7 @@ void rtkListAppend(struct rtklist* list, int data)
     ++list->currSize;
 }
 
-int rtkListGetValueAt(struct rtklist* list, int index)
+int _rtkListGetValueAt(rtklist* list, int index)
 {
     if(index >= list->currSize)
     {
@@ -48,7 +53,7 @@ int rtkListGetValueAt(struct rtklist* list, int index)
     return list->data[index];
 }
 
-int rtkListPop(struct rtklist* list, int index)
+int _rtkListPop(rtklist* list, int index)
 {
     int value = list->data[index];
 
@@ -58,12 +63,12 @@ int rtkListPop(struct rtklist* list, int index)
     return value;    
 }
 
-int rtkListGetCurrentSize(struct rtklist* list)
+int _rtkListGetCurrentSize(rtklist* list)
 {
     return list->currSize;
 }
 
-int rtkListMaxSize(struct rtklist* list)
+int _rtkListMaxSize(rtklist* list)
 {
     return list->currMul * rtklist_increment;
 }
