@@ -18,15 +18,15 @@ void rtkFreeStack(rtkstack* stack)
 
 void _rtkStackPush(rtkstack* stack, int item)
 {
-
+    stack->list->append(stack->list, item);
 }
 
 int _rtkStackPop(rtkstack* stack)
 {
-
+    stack->list->pop(stack->list);
 }
 
 int _rtkStackSize(rtkstack* stack)
 {
-
+    return stack->list->size(stack->list);
 }

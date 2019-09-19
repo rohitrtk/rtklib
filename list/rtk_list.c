@@ -15,8 +15,9 @@ rtklist* rtkMallocList()
     list->data      = malloc(sizeof(int) * list->currMul * rtklist_increment);
 
     list->append    = _rtkListAppend;
-    list->get       = _rtkListGetCurrentSize;
+    list->get       = _rtkListGetValueAt;
     list->pop       = _rtkListPop;
+    list->remove    = _rtkListRemove;
     list->size      = _rtkListGetCurrentSize;
     
     return list;
@@ -53,14 +54,20 @@ int _rtkListGetValueAt(rtklist* list, int index)
     return list->data[index];
 }
 
-int _rtkListPop(rtklist* list, int index)
+int _rtkListRemove(rtklist* list, int index)
 {
     int value = list->data[index];
 
     memmove(list->data + index, list->data + index + 1, 
         sizeof(int) * (rtklist_increment * list->currMul - list->currSize));
+    list->currSize--;
 
-    return value;    
+    return value;  
+}
+
+int _rtkListPop(rtklist* list)
+{
+      _rtkListRemove(list, list->currSize - 1);
 }
 
 int _rtkListGetCurrentSize(rtklist* list)
