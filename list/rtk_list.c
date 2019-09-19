@@ -33,8 +33,6 @@ void _rtkListAppend(rtklist* list, int data)
 {
     if(list->currSize == list->currMul * rtklist_increment)
     {
-        LOG("Resizing list!\n");
-
         ++list->currMul;
         list->data = realloc(list->data, sizeof(int) * list->currMul * rtklist_increment);
     }
@@ -67,7 +65,7 @@ int _rtkListRemove(rtklist* list, int index)
 
 int _rtkListPop(rtklist* list)
 {
-      _rtkListRemove(list, list->currSize - 1);
+    return _rtkListRemove(list, list->currSize - 1);
 }
 
 int _rtkListGetCurrentSize(rtklist* list)

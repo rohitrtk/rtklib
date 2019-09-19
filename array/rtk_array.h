@@ -1,8 +1,6 @@
 #ifndef RTK_ARRAY_H
 #define RTK_ARRAY_H_
 
-#include "../rtklib.h"
-
 struct rtkarray
 {
     int maxElements;
