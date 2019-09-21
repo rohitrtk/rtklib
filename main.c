@@ -1,6 +1,8 @@
 #include "list/rtk_list.h"
 #include "array/rtk_array.h"
 #include "stack/rtk_stack.h"
+#include "random/rtk_random.h"
+#include "sort/rtk_sort.h"
 
 #include <stdio.h>
 
@@ -73,7 +75,27 @@ void testStack()
 
 int main(int argc, char** argv)
 {
-    testStack();
+    int array[20];
+    for(int i = 0; i < 20; ++i)
+    {
+        array[i] = rtkrandom(1, 20);
+    }
 
+    printf("Before sort:");
+    for(int i = 0; i < 20; i++)
+    {
+        printf(" %d", array[i]);
+    }
+    printf("\n");
+
+    rtkBubbleSort(array, 20);
+
+    printf("After sort:");
+    for(int i = 0; i < 20; i++)
+    {
+        printf(" %d", array[i]);
+    }
+    printf("\n");
+    
     return 0;
 }
