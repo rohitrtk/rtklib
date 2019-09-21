@@ -6,7 +6,18 @@
 
 #include <stdio.h>
 
-#define LAZYFOR(loopNum, block) for(int i = 0; i < loopNum; ++i) { block; }
+void testList();
+void testArray();
+void testStack();
+void testBubbleSort();
+void testInsertionSort();
+
+int main(int argc, char** argv)
+{
+    testInsertionSort();
+    
+    return 0;
+}
 
 void testList()
 {
@@ -73,7 +84,7 @@ void testStack()
     rtkFreeStack(stack);
 }
 
-int main(int argc, char** argv)
+void testBubbleSort()
 {
     int array[20];
     for(int i = 0; i < 20; ++i)
@@ -96,6 +107,29 @@ int main(int argc, char** argv)
         printf(" %d", array[i]);
     }
     printf("\n");
-    
-    return 0;
+}
+
+void testInsertionSort()
+{
+    int array[20];
+    for(int i = 0; i < 20; ++i)
+    {
+        array[i] = rtkrandom(1, 20);
+    }
+
+    printf("Before sort:");
+    for(int i = 0; i < 20; i++)
+    {
+        printf(" %d", array[i]);
+    }
+    printf("\n");
+
+    rtkInsertionSort(array, 20);
+
+    printf("After sort:");
+    for(int i = 0; i < 20; i++)
+    {
+        printf(" %d", array[i]);
+    }
+    printf("\n");
 }
