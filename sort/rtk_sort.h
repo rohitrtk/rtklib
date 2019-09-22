@@ -3,6 +3,14 @@
 
 #include <stdlib.h>
 
+#define BUBBLE_SORT     0
+#define INSERTION_SORT  1
+#define SELECTION_SORT  2
+#define MERGE_SORT      3
+#define QUICK_SORT      4
+
+void sort(int* array, const size_t length, unsigned int sortType);
+
 void _swap(int* val_x, int* val_y);
 
 void rtkBubbleSort(int* array, const size_t length);

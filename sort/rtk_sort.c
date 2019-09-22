@@ -2,6 +2,31 @@
 
 #include <string.h>
 
+void sort(int* array, const size_t length, unsigned int sortType)
+{
+    switch(sortType)
+    {
+    case BUBBLE_SORT:
+        rtkBubbleSort(array, length);
+        break;
+    case INSERTION_SORT:
+        rtkInsertionSort(array, length);
+        break;
+    case SELECTION_SORT:
+        rtkSelectionSort(array, length);
+        break;
+    case MERGE_SORT:
+        rtkMergeSort(array, length);
+        break;
+    case QUICK_SORT:
+        rtkQuickSort(array, length);
+        break;
+    default:
+        rtkBubbleSort(array, length);
+        break;
+    }
+}
+
 void _swap(int* val_x, int* val_y)
 {
     int temp = *val_x;
@@ -28,13 +53,34 @@ void rtkInsertionSort(int* array, const size_t length)
     for(int i = 1; i < length; ++i)
     {
         int j = i - 1;
-
-        while(j >= 0 && array[i] < array[j])
+        int k = 0;
+        while(j >= 0 && array[i - k] < array[j])
         {
-            array[j+1] = array[j];
-            j -= 1;
+            _swap(&array[j], &array[i - k]);
+            --j;
+            ++k;
         }
-
-        array[j+1] = array[i];
     }
 }
+
+void rtkSelectionSort(int* array, const size_t length)
+{
+    int* currentMin;
+    for(int i = 0; i < length; ++i)
+    {
+        currentMin = &array[i];
+
+        for(int j = i; j < length; ++j)
+        {
+            if(array[j] < *currentMin)
+            {
+                currentMin = &array[j];
+            }
+        }
+
+        _swap(&array[i], currentMin);
+    }
+}
+
+void rtkMergeSort(int* array, const size_t length) {}
+void rtkQuickSort(int* array, const size_t length) {}

@@ -9,12 +9,11 @@
 void testList();
 void testArray();
 void testStack();
-void testBubbleSort();
-void testInsertionSort();
+void testSort(unsigned int sortType);
 
 int main(int argc, char** argv)
 {
-    testInsertionSort();
+    testSort(INSERTION_SORT);
     
     return 0;
 }
@@ -84,50 +83,26 @@ void testStack()
     rtkFreeStack(stack);
 }
 
-void testBubbleSort()
+void testSort(unsigned int sortType)
 {
-    int array[20];
-    for(int i = 0; i < 20; ++i)
+    int length = 10;
+    int array[length];
+    for(int i = 0; i < length; ++i)
     {
-        array[i] = rtkrandom(1, 20);
+        array[i] = rtkrandom(1, length);
     }
 
     printf("Before sort:");
-    for(int i = 0; i < 20; i++)
+    for(int i = 0; i < length; i++)
     {
         printf(" %d", array[i]);
     }
     printf("\n");
 
-    rtkBubbleSort(array, 20);
+    sort(array, length, sortType);
 
     printf("After sort:");
-    for(int i = 0; i < 20; i++)
-    {
-        printf(" %d", array[i]);
-    }
-    printf("\n");
-}
-
-void testInsertionSort()
-{
-    int array[20];
-    for(int i = 0; i < 20; ++i)
-    {
-        array[i] = rtkrandom(1, 20);
-    }
-
-    printf("Before sort:");
-    for(int i = 0; i < 20; i++)
-    {
-        printf(" %d", array[i]);
-    }
-    printf("\n");
-
-    rtkInsertionSort(array, 20);
-
-    printf("After sort:");
-    for(int i = 0; i < 20; i++)
+    for(int i = 0; i < length; i++)
     {
         printf(" %d", array[i]);
     }
