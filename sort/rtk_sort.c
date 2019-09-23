@@ -82,5 +82,23 @@ void rtkSelectionSort(int* array, const size_t length)
     }
 }
 
-void rtkMergeSort(int* array, const size_t length) {}
+void rtkMergeSort(int* array, const size_t length) 
+{
+    int middle = length / 2;
+
+    // Merge Left
+    rtkMergeSort(array, middle);
+
+    // Merge Right
+    rtkMergeSort(array + middle, middle + 1);
+
+    // Merge
+    
+}
+
+void _merge(int* array, int left, int middle, int right)
+{
+
+}
+
 void rtkQuickSort(int* array, const size_t length) {}

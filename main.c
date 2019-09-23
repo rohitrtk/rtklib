@@ -13,8 +13,15 @@ void testSort(unsigned int sortType);
 
 int main(int argc, char** argv)
 {
-    testSort(INSERTION_SORT);
-    
+    //testSort(MERGE_SORT);
+    int x[8] = {2,8,5,3,9,4,1,7};
+    rtkMergeSort(x, 8);
+    printf("\n");
+    for(int i = 0; i < 8; ++i)
+    {
+        printf("%d ", x[i]);
+    }
+    printf("\n");
     return 0;
 }
 
