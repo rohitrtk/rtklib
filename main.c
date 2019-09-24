@@ -3,6 +3,7 @@
 #include "stack/rtk_stack.h"
 #include "random/rtk_random.h"
 #include "sort/rtk_sort.h"
+#include "string/rtk_string.h"
 
 #include <stdio.h>
 
@@ -10,18 +11,13 @@ void testList();
 void testArray();
 void testStack();
 void testSort(unsigned int sortType);
+void testString();
 
 int main(int argc, char** argv)
 {
-    //testSort(MERGE_SORT);
-    int x[8] = {2,8,5,3,9,4,1,7};
-    rtkMergeSort(x, 8);
-    printf("\n");
-    for(int i = 0; i < 8; ++i)
-    {
-        printf("%d ", x[i]);
-    }
-    printf("\n");
+    testString();
+
+
     return 0;
 }
 
@@ -114,4 +110,15 @@ void testSort(unsigned int sortType)
         printf(" %d", array[i]);
     }
     printf("\n");
+}
+
+void testString()
+{
+    rtkstring* str = rtkMallocString();
+
+    str->setString(str, "HELLO");
+
+    printf("Data in rtkstring: %s", str->getString(str));
+
+    rtkFreeString(str);
 }
