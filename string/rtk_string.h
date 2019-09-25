@@ -21,5 +21,7 @@ void            _rtkStringSetString(rtkstring* string, const char* str);
 const char*     _rtkStringGetString(rtkstring* string);
 const size_t    _rtkStringGetLength(rtkstring* string);
 
+const size_t    rtkStringLen(const char* string);
+void            rtkStringCpy(char* dest, const char* src, size_t len);
 
 #endif

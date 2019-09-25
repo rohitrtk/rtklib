@@ -116,9 +116,10 @@ void testString()
 {
     rtkstring* str = rtkMallocString();
 
-    str->setString(str, "HELLO");
+    str->setString(str, "HELLOS");
+    printf("Length of string is %ld\n", str->getLength(str));
 
-    printf("Data in rtkstring: %s", str->getString(str));
+    printf("Data in rtkstring: %s\n", str->getString(str));
 
     rtkFreeString(str);
 }
