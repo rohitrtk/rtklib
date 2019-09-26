@@ -84,72 +84,72 @@ void rtkSelectionSort(int* array, const size_t length)
     }
 }
 
-void rtkMergeSort(int* array, const size_t length) 
+void rtkMergeSort(int* array, const size_t length)
 {
-    if(length < 2)
+    if (length < 2)
     {
         return;
     }
 
-    int middle = length / 2;
-
-    size_t lengthLeft = middle;
-    size_t lengthRight = length - middle;
-
-    int left[lengthLeft];
-    int right[lengthRight];
-
-    for(int i = 0; i < lengthLeft; ++i) 
-    {
-        left[i] = array[i];
-    }
-
-    for(int i = 0; i < lengthRight; ++i)
-    {
-        right[i] = array[lengthLeft + i];
-    }
-
-    rtkMergeSort(left, lengthLeft);
-    rtkMergeSort(right, lengthRight);
-
-    _merge(left, right, array, lengthLeft, lengthRight);
+    _mergesort(array, 0, length - 1);
 }
 
-void _merge(int* left, int* right, int* array, const size_t lengthLeft, const size_t lengthRight)
+void _mergesort(int* array, const size_t startIndex, const size_t endIndex)
 {
-    int i = 0;
-    int j = 0;
-    int k = 0;
-
-    while(i < lengthLeft && j < lengthRight)
+    if(startIndex >= endIndex)
     {
-        if(left[i] <= right[i])
+        return;
+    }
+
+    int mid = (startIndex + endIndex) / 2;
+
+    _mergesort(array, startIndex, mid);
+    _mergesort(array, mid + 1, endIndex);
+    
+    _merge(array, startIndex, endIndex);
+}
+
+void _merge(int* array, const size_t startIndex, const size_t endIndex)
+{
+    int mid = (startIndex + endIndex) / 2;
+
+    int i = startIndex;
+    int j = mid + 1;
+    int k = startIndex;
+
+    int temp[endIndex];
+
+    while(i <= mid && j <= endIndex)
+    {
+        if(array[i] < array[j])
         {
-            array[k] = left[i];
+            temp[k] = array[i];
             ++i;
         }
         else
         {
-            array[k] = right[j];
+            temp[k] = array[j];
             ++j;
         }
         
         ++k;
     }
 
-    while(i < lengthLeft)
+    while(i <= mid)
     {
-        array[k] = left[i];
+        temp[k] = array[i];
         ++i;
         ++k;
     }
 
-    while(j < lengthRight)
+    while(j <= endIndex)
     {
-        array[k] = right[j];
+        temp[k] = array[j];
         ++j;
         ++k;
     }
+
+    memmove(&array[startIndex], &temp[startIndex], sizeof(int) * (endIndex - startIndex + 1));
 }
 
 void rtkQuickSort(int* array, const size_t length) {}
