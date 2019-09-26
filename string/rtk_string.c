@@ -1,5 +1,5 @@
 #include "rtk_string.h"
-#include <stdio.h>
+
 rtkstring* rtkMallocString()
 {
     rtkstring* string = malloc(sizeof(rtkstring));

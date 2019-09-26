@@ -14,7 +14,7 @@
 void sort(int* array, const size_t length, unsigned int sortType);
 
 void _swap(int* val_x, int* val_y);
-void _merge(int* array1, int left, int middle, int right);
+void _merge(int* left, int* right, int* array, const size_t lengthLeft, const size_t lengthRight);
 
 void rtkBubbleSort(int* array, const size_t length);
 void rtkInsertionSort(int* array, const size_t length);

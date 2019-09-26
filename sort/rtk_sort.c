@@ -2,6 +2,8 @@
 
 #include <string.h>
 
+#include <stdio.h>
+
 void sort(int* array, const size_t length, unsigned int sortType)
 {
     switch(sortType)
@@ -84,21 +86,70 @@ void rtkSelectionSort(int* array, const size_t length)
 
 void rtkMergeSort(int* array, const size_t length) 
 {
+    if(length < 2)
+    {
+        return;
+    }
+
     int middle = length / 2;
 
-    // Merge Left
-    rtkMergeSort(array, middle);
+    size_t lengthLeft = middle;
+    size_t lengthRight = length - middle;
 
-    // Merge Right
-    rtkMergeSort(array + middle, middle + 1);
+    int left[lengthLeft];
+    int right[lengthRight];
 
-    // Merge
-    
+    for(int i = 0; i < lengthLeft; ++i) 
+    {
+        left[i] = array[i];
+    }
+
+    for(int i = 0; i < lengthRight; ++i)
+    {
+        right[i] = array[lengthLeft + i];
+    }
+
+    rtkMergeSort(left, lengthLeft);
+    rtkMergeSort(right, lengthRight);
+
+    _merge(left, right, array, lengthLeft, lengthRight);
 }
 
-void _merge(int* array, int left, int middle, int right)
+void _merge(int* left, int* right, int* array, const size_t lengthLeft, const size_t lengthRight)
 {
+    int i = 0;
+    int j = 0;
+    int k = 0;
 
+    while(i < lengthLeft && j < lengthRight)
+    {
+        if(left[i] <= right[i])
+        {
+            array[k] = left[i];
+            ++i;
+        }
+        else
+        {
+            array[k] = right[j];
+            ++j;
+        }
+        
+        ++k;
+    }
+
+    while(i < lengthLeft)
+    {
+        array[k] = left[i];
+        ++i;
+        ++k;
+    }
+
+    while(j < lengthRight)
+    {
+        array[k] = right[j];
+        ++j;
+        ++k;
+    }
 }
 
 void rtkQuickSort(int* array, const size_t length) {}

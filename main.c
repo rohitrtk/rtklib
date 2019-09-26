@@ -15,8 +15,7 @@ void testString();
 
 int main(int argc, char** argv)
 {
-    testString();
-
+    testSort(MERGE_SORT);
 
     return 0;
 }
